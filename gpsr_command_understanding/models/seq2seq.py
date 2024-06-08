@@ -181,7 +181,6 @@ class Seq2Seq(Model):
 
         return class_log_probabilities, state
 
-    @overrides
     def forward(self,  # type: ignore
                 source_tokens: Dict[str, torch.LongTensor],
                 metadata: List[Dict[str, Any]],

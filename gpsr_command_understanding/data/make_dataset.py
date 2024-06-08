@@ -1,3 +1,10 @@
+import os
+import sys
+
+project_path = os.environ.get("PROJECT_PATH")
+
+sys.path.append(project_path)
+
 import copy
 
 from lark import Token

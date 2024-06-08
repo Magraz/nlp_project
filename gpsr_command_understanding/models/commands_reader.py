@@ -60,7 +60,6 @@ class CommandsDatasetReader(DatasetReader):
         self._source_add_start_token = source_add_start_token
         self._source_add_end_token = source_add_end_token
 
-    @overrides
     def _read(self, file_path):
         with open(cached_path(file_path), "r") as data_file:
             logger.info("Reading instances from lines in file at: %s", file_path)
@@ -79,7 +78,6 @@ class CommandsDatasetReader(DatasetReader):
                 source_sequence, target_sequence = line, next_line
                 yield self.text_to_instance(source_sequence, target_sequence)
 
-    @overrides
     def text_to_instance(self, source_string: str, target_string: str = None) -> Instance:  # type: ignore
         # pylint: disable=arguments-differ
         tokenized_source = self._source_tokenizer.tokenize(source_string)
