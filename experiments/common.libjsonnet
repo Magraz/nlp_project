@@ -39,7 +39,7 @@ local HIDDEN_SIZE = 200;
     patience: 30,
     cuda_device: CUDA_DEVICE,
     checkpointer: {
-        num_serialized_models_to_keep: 0
+        keep_most_recent_by_count: 1
     }
   },
 

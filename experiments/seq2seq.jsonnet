@@ -1,4 +1,5 @@
 local common_parameters = import 'common_seq2seq.libjsonnet';
+
 std.mergePatch(common_parameters, {
   dataset_reader: {
     source_token_indexers: {

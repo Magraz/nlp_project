@@ -1,5 +1,6 @@
 local common_parameters = import 'common.libjsonnet';
 local HIDDEN_SIZE = 200;
+
 std.mergePatch(common_parameters,
 {
   dataset_reader: {
@@ -53,7 +54,7 @@ std.mergePatch(common_parameters,
     patience: 30,
     validation_metric: '+seq_acc',
     checkpointer: {
-        num_serialized_models_to_keep: 0
+        keep_most_recent_by_count: 1
     }
   },
 })
