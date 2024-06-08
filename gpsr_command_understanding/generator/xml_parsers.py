@@ -32,7 +32,7 @@ class ObjectParser:
 
     def get_objects_to_categories(self):
         categories = {}
-        for cat in self.tree.findall("//category"):
+        for cat in self.tree.findall(".//category"):
             cat_name = cat.attrib['name'].lower()
             for obj in cat.findall("object"):
                 obj_name = obj.attrib['name'].lower()
@@ -47,7 +47,7 @@ class ObjectParser:
         return None
 
     def get_attributes(self):
-        all_obj = self.tree.findall("//object")
+        all_obj = self.tree.findall(".//object")
         attributes = defaultdict(lambda: defaultdict(None))
         for obj in all_obj:
             obj_name = obj.attrib["name"]
@@ -94,7 +94,7 @@ class LocationParser(object):
     def get_all_locations(self):
         locations = []
         # For our purposes, rooms and locations are all locations
-        for location in self.tree.findall("//location") + self.tree.findall("//room"):
+        for location in self.tree.findall(".//location") + self.tree.findall(".//room"):
             locations.append(location.attrib['name'])
         return locations
 
@@ -119,12 +119,12 @@ class LocationParser(object):
 
     def get_all_rooms(self):
         all_rooms = []
-        for room in self.tree.findall("//room"):
+        for room in self.tree.findall(".//room"):
             all_rooms.append(room.attrib['name'])
         return all_rooms
 
     def get_attributes(self):
-        all_loc = self.tree.findall("//location") + self.tree.findall("//room")
+        all_loc = self.tree.findall(".//location") + self.tree.findall(".//room")
         attributes = defaultdict(lambda: defaultdict(None))
         for loc in all_loc:
             loc_name = loc.attrib["name"]
