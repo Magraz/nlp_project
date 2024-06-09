@@ -5,3 +5,4 @@ export EVALUATE_ON_TEST=0
 export TRAIN_PATH="/home/magraz/nlp_project/data/set1/train.txt"
 export VALIDATION_PATH="/home/magraz/nlp_project/data/set1/val.txt"
 export PROJECT_PATH="/home/magraz/nlp_project"
+export TRANSFORMER_NAME="google-bert/bert-base-uncased"
