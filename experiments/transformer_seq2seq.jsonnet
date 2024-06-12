@@ -9,7 +9,7 @@ local get_transformer_size(name) =
     if std.length(std.findSubstr("base", name)) == 1 then
         768
     else if std.length(std.findSubstr("large", name)) == 1 then
-        1024
+        1280
     else if std.objectHas(transformer_sizes, name) then
         transformer_sizes[name]
     else
@@ -32,6 +32,7 @@ std.mergePatch(common_parameters,
    },
  },
  model: {
+  "use_bleu": true,
    type: 'seq2seq',
    source_embedder: {
      token_embedders: {

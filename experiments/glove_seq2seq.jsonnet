@@ -10,6 +10,7 @@ std.mergePatch(common_parameters, {
     },
   },
   model: {
+    "use_bleu": true,
     type: 'seq2seq',
     source_embedder: {
       token_embedders: {
