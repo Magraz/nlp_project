@@ -1,32 +1,77 @@
+/home/magraz/nlp_project/gpsr-commands-dataset-master/gen
 #NEW VERSION
 TO RUN
 source set_vars.sh
 
 python3 gpsr_command_understanding/data/make_dataset.py -a --name set1
 
-allennlp train experiments/seq2seq.jsonnet -s results/seq2seq --include-package gpsr_command_understanding
+#TRAIN
 
-allennlp train experiments/glove_seq2seq.jsonnet -s results/glove_seq2seq --include-package gpsr_command_understanding
+allennlp train experiments/seq2seq.jsonnet -s $RESULTS_PATH/seq2seq --include-package gpsr_command_understanding
 
-allennlp train experiments/elmo_seq2seq.jsonnet -s results/elmo_seq2seq --include-package gpsr_command_understanding
+allennlp train experiments/glove_seq2seq.jsonnet -s $RESULTS_PATH/glove --include-package gpsr_command_understanding
 
-allennlp train experiments/transformer_seq2seq.jsonnet -s results/bert_base_seq2seq --include-package gpsr_command_understanding
+allennlp train experiments/elmo_seq2seq.jsonnet -s $RESULTS_PATH/elmo --include-package gpsr_command_understanding
 
-allennlp train experiments/transformer_seq2seq.jsonnet -s results/bert_large_seq2seq --include-package gpsr_command_understanding
+export TRANSFORMER_NAME="google-bert/bert-base-uncased"
+allennlp train experiments/transformer_seq2seq.jsonnet -s $RESULTS_PATH/bert_base --include-package gpsr_command_understanding
 
-allennlp train experiments/transformer_seq2seq.jsonnet -s results/gpt2_seq2seq --include-package gpsr_command_understanding
+export TRANSFORMER_NAME="google-bert/bert-large-uncased"
+allennlp train experiments/transformer_seq2seq.jsonnet -s $RESULTS_PATH/bert_large --include-package gpsr_command_understanding
+
+export TRANSFORMER_NAME="gpt2"
+allennlp train experiments/transformer_seq2seq.jsonnet -s $RESULTS_PATH/gpt2_base --include-package gpsr_command_understanding
+
+export TRANSFORMER_NAME="gpt2-large"
+allennlp train experiments/transformer_seq2seq.jsonnet -s $RESULTS_PATH/gpt2_large --include-package gpsr_command_understanding
 
 
-allennlp predict results/seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/seq2seq.json --use-dataset-reader
+#PREDICT
+allennlp predict $RESULTS_PATH/seq2seq/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/seq2seq.json --use-dataset-reader
 
-allennlp predict results/elmo_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/elmo.json --use-dataset-reader
+allennlp predict $RESULTS_PATH/elmo/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/elmo.json --use-dataset-reader
 
-allennlp predict results/glove_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/glove.json --use-dataset-reader
+allennlp predict $RESULTS_PATH/glove/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/glove.json --use-dataset-reader
 
-allennlp predict results/bert_base_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/bert_base.json --use-dataset-reader
+export TRANSFORMER_NAME="google-bert/bert-base-uncased"
+allennlp predict $RESULTS_PATH/bert_base/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/bert_base.json --use-dataset-reader
 
-allennlp predict results/bert_large_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/bert_large.json --use-dataset-reader
+export TRANSFORMER_NAME="google-bert/bert-large-uncased"
+allennlp predict $RESULTS_PATH/bert_large/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/bert_large.json --use-dataset-reader
 
-allennlp predict results/gpt2_base_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/gpt2_base.json --use-dataset-reader
+export TRANSFORMER_NAME="gpt2"
+allennlp predict $RESULTS_PATH/gpt2_base/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/gpt2_base.json --use-dataset-reader
 
-allennlp predict results/gpt2_large_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/gpt2_large.json --use-dataset-reader
+export TRANSFORMER_NAME="gpt2-large"
+allennlp predict $RESULTS_PATH/gpt2_large/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --predictor command_parser --output-file $PREDICTION_PATH/gpt2_large.json --use-dataset-reader
+
+
+#EVALUATE
+allennlp evaluate $RESULTS_PATH/seq2seq/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/seq2seq.json
+
+allennlp evaluate $RESULTS_PATH/elmo/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/elmo.json
+
+allennlp evaluate $RESULTS_PATH/glove/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/glove.json
+
+allennlp evaluate $RESULTS_PATH/bert_base/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/bert_base.json
+
+allennlp evaluate $RESULTS_PATH/bert_large/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/bert_large.json
+
+allennlp evaluate $RESULTS_PATH/gpt2_base/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/gpt2_base.json
+
+allennlp evaluate $RESULTS_PATH/gpt2_large/model.tar.gz $TEST_COMMAND_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_COMMANDS_PATH/gpt2_large.json
+
+
+allennlp evaluate $RESULTS_PATH/seq2seq/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/seq2seq.json
+
+allennlp evaluate $RESULTS_PATH/elmo/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/elmo.json
+
+allennlp evaluate $RESULTS_PATH/glove/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/glove.json
+
+allennlp evaluate $RESULTS_PATH/bert_base/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/bert_base.json
+
+allennlp evaluate $RESULTS_PATH/bert_large/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/bert_large.json
+
+allennlp evaluate $RESULTS_PATH/gpt2_base/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/gpt2_base.json
+
+allennlp evaluate $RESULTS_PATH/gpt2_large/model.tar.gz $TEST_LAMBDA_PATH  --include-package gpsr_command_understanding --output-file $EVALUATE_LAMBDA_PATH/gpt2_large.json

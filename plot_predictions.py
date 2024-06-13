@@ -29,7 +29,7 @@ if __name__ == '__main__':
     model_names = ['bert_base', 'bert_large', 'elmo', 'glove', 'seq2seq', "gpt2_base", "gpt2_large"]
     data = {}
     for model_name in model_names:
-        file_path = f"/home/magraz/nlp_project/predictions/{model_name}.json"
+        file_path = f"/home/magraz/nlp_project/predictions/50_epochs/{model_name}.json"
         data[model_name] = get_data_from_json(file_path)
 
     #Plot training loss
