@@ -1,0 +1,22 @@
+#NEW VERSION
+TO RUN
+source set_vars.sh
+
+python3 gpsr_command_understanding/data/make_dataset.py -a --name set1
+
+allennlp train experiments/seq2seq.jsonnet -s results/seq2seq --include-package gpsr_command_understanding
+
+allennlp train experiments/glove_seq2seq.jsonnet -s results/glove_seq2seq --include-package gpsr_command_understanding
+
+allennlp train experiments/elmo_seq2seq.jsonnet -s results/elmo_seq2seq --include-package gpsr_command_understanding
+
+allennlp train experiments/transformer_seq2seq.jsonnet -s results/bert_base_seq2seq --include-package gpsr_command_understanding
+
+allennlp train experiments/transformer_seq2seq.jsonnet -s results/bert_large_seq2seq --include-package gpsr_command_understanding
+
+allennlp train experiments/transformer_seq2seq.jsonnet -s results/gpt2_seq2seq --include-package gpsr_command_understanding
+
+
+allennlp predict results/seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/seq2seq.json --use-dataset-reader
+
+allennlp predict results/gpt2_large_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/gpt2_large.json --use-dataset-reader
