@@ -19,4 +19,14 @@ allennlp train experiments/transformer_seq2seq.jsonnet -s results/gpt2_seq2seq -
 
 allennlp predict results/seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/seq2seq.json --use-dataset-reader
 
+allennlp predict results/elmo_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/elmo.json --use-dataset-reader
+
+allennlp predict results/glove_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/glove.json --use-dataset-reader
+
+allennlp predict results/bert_base_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/bert_base.json --use-dataset-reader
+
+allennlp predict results/bert_large_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/bert_large.json --use-dataset-reader
+
+allennlp predict results/gpt2_base_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/gpt2_base.json --use-dataset-reader
+
 allennlp predict results/gpt2_large_seq2seq/model.tar.gz /home/magraz/nlp_project/data/set1/test.txt  --include-package gpsr_command_understanding --predictor command_parser --output-file ./predictions/gpt2_large.json --use-dataset-reader

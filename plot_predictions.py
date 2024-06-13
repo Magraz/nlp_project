@@ -26,8 +26,7 @@ def get_data_from_json(filename):
     return loss
 
 if __name__ == '__main__':
-    model_names = ['bert_base_prediction', 'bert_large_prediction', 'elmo_prediction', 'glove_prediction', 'seq2seq', "gpt2"]
-    # model_names = ['bert_base_prediction']
+    model_names = ['bert_base', 'bert_large', 'elmo', 'glove', 'seq2seq', "gpt2_base", "gpt2_large"]
     data = {}
     for model_name in model_names:
         file_path = f"/home/magraz/nlp_project/predictions/{model_name}.json"
@@ -37,7 +36,7 @@ if __name__ == '__main__':
     figs, axs = plt.subplots(1, 1)
 
     axs.set_title('Prediction Loss')
-    
+    axs.set_ylabel('Accumulated Loss')
     for model_name in model_names:
         axs.bar(x=model_name,height=sum(data[model_name]), label = model_name)
         

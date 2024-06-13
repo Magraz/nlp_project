@@ -40,11 +40,11 @@ def get_data_from_json(path_to_directory):
                 val_loss.append(json_data['validation_loss'])
                 val_seq_acc.append(json_data['validation_seq_acc'])
                 val_parse_valid.append(json_data['validation_parse_validity'])
-                val_bleu.append(json_data['validation_BLEU'])
+                val_bleu.append(json_data['validation_BLEU']*100)
 
     data['training_loss'] = training_loss
-    data['val_loss'] = val_loss
-    data['val_seq_acc'] = val_seq_acc
+    data['validation_loss'] = val_loss
+    data['validation_seq_acc'] = val_seq_acc
     # data['val_parse_valid'] = val_parse_valid
     data['validation_BLEU'] = val_bleu
     #################################
@@ -82,12 +82,8 @@ def get_graphs(data):
     plt.show()
 
 if __name__ == '__main__':
-    # path_to_dir = sys.argv[1]
-    # path_to_dir = '/home/nboehme/Music/json_tests'
 
-    # path_to_dir = '/home/nboehme/Downloads/metrics_epoch'
-
-    model_names = ['bert_base_seq2seq', 'bert_large_seq2seq', 'elmo_seq2seq', 'glove_seq2seq', 'seq2seq']
+    model_names = ['bert_base_seq2seq', 'bert_large_seq2seq', 'elmo_seq2seq', 'glove_seq2seq', 'gpt2_base_seq2seq', 'gpt2_large_seq2seq','seq2seq']
     data = {}
     for model_name in model_names:
         path_to_dir = f"/home/magraz/nlp_project/results/{model_name}"
@@ -96,11 +92,11 @@ if __name__ == '__main__':
     #Plot training loss
     figs, axs = plt.subplots(1, 1)
 
-    axs.set_title('Training Loss')
+    axs.set_title('Validation Accuracy')
     axs.set_xlabel('epochs')
     
     for model_name in model_names:
-        axs.plot(data[model_name]['training_loss'][:], label = model_name)
+        axs.plot(data[model_name]['validation_seq_acc'][:], label = model_name)
         
     plt.legend()
     plt.show()
