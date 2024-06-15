@@ -19,6 +19,6 @@ std.mergePatch(common_parameters, {
     },
   },
   trainer: {
-    num_epochs: 150,
+    num_epochs: 75,
   },
 })

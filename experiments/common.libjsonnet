@@ -35,7 +35,7 @@ local HIDDEN_SIZE = 200;
       warmup_steps: 1000,
       model_size: HIDDEN_SIZE,
     },
-    num_epochs: 150,
+    num_epochs: 75,
     patience: 30,
     cuda_device: CUDA_DEVICE,
     checkpointer: {

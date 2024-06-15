@@ -50,7 +50,7 @@ std.mergePatch(common_parameters,
       warmup_steps: 1000,
       model_size: HIDDEN_SIZE,
     },
-    num_epochs: 150,
+    num_epochs: 75,
     patience: 30,
     validation_metric: '+seq_acc',
     checkpointer: {
